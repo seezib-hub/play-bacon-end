@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End_bacon</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f7f7f9;
+    }
+
+    /* 상단 이미지: 배경 아님! -> 잘림 없음 */
+    .hero {
+      position: relative; /* 버튼 배치 기준 */
+      width: 100%;
+    }
+    .hero img {
+      width: 100%;
+      height: auto;      /* 비율 유지, 잘림 없음 */
+      display: block;
+    }
+    .sound-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      z-index: 2;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 0 auto;
+    }
+    @media (min-width: 900px) {
+      .layout {
+        grid-template-columns: 2fr 1fr; /* 태블릿 이상에서 좌/우 배치 */
+        align-items: start;
+      }
+    }
+
+    /* 메인 영상 */
+    .video-wrap {
+      width: 100%;
+      height: 200px;          /* 요청대로 고정 높이 */
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      background: #000;
+    }
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* 썸네일 3개 */
+    .thumbs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 14px;
+      height: 200px; /* 고정 높이 */
+    }
+    .thumb {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ddd;
+      box-shadow: 0 4px 12px rgba(0,0,0,.10);
+    }
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .thumb.big { grid-row: 1 / span 2; }
+  </style>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+  <!-- 상단 전체폭 이미지 (잘림 없음) + 버튼 -->
+  <div class="hero">
+    <img src="baconArtboard.jpg" alt="rememberBacon">
+    <button id="soundBtn" class="sound-btn" onclick="toggleSound()">🔇 OFF</button>
+  </div>
+
+  <!-- 아래 콘텐츠: 메인 영상 + 재생목록 썸네일 -->
+  <div class="content">
+    <div class="layout">
+      <!-- 메인 영상 -->
+      <div class="video-wrap">
+        <div id="player"></div>
+      </div>
+
+      <!-- 썸네일 3개 -->
+      <div class="thumbs">
+        <a class="thumb big"
+           href="https://www.youtube.com/watch?v=DQfHZOiCVaM&list=PLWtEXRxbTrtgUaxCk6vGkb2GkIss_mOGF&index=7"
+           target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/DQfHZOiCVaM/hqdefault.jpg" alt="공연장면">
+        </a>
+        <a class="thumb"
+           href="https://www.youtube.com/watch?v=CWI9cj3lHB4&list=PLWtEXRxbTrtgUaxCk6vGkb2GkIss_mOGF&index=2"
+           target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/CWI9cj3lHB4/hqdefault.jpg" alt="베이컨TV2">
+        </a>
+        <a class="thumb"
+           href="https://www.youtube.com/watch?v=iy-yVr5b66Y&list=PLWtEXRxbTrtgUaxCk6vGkb2GkIss_mOGF&index=17"
+           target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/iy-yVr5b66Y/hqdefault.jpg" alt="프로필촬영현장">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let player;
+    let isMuted = true;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        videoId: '_aBykMbRIog',
+        playerVars: {
+          autoplay: 1,
+          mute: 1
+        }
+      });
+    }
+
+    function toggleSound() {
+      const btn = document.getElementById("soundBtn");
+      if (isMuted) {
+        player.unMute();
+        player.setVolume(70);
+        btn.textContent = "🔊 ON";
+        isMuted = false;
+      } else {
+        player.mute();
+        btn.textContent = "🔇 OFF";
+        isMuted = true;
+      }
+    }
+  </script>
+
+</body>
+</html>
