@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    // 현재 URL
+    const url = window.location.href;
+
+    // 공백 인코딩 (%20) 체크
+    if (url.includes("%20")) {
+      // %20 제거
+      const clean = url.replace(/%20/g, "");
+      // 만약 끝에 'play-bacon-end' 뒤에 / 가 없으면 붙임
+      const base = "https://seezib-hub.github.io/play-bacon-end/";
+      // clean이 base보다 길면 base 이후 부분 유지
+      const suffix = clean.substring(clean.indexOf("play-bacon-end/") + "play-bacon-end/".length);
+      window.location.replace(base + suffix);
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting to correct page...</p>
+</body>
+</html>
